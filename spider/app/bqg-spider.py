@@ -18,16 +18,6 @@ headers = {
                   'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
 
 
-def get_content(target):
-    req = requests.get(url=target)
-    req.encoding = 'utf-8'
-    html = req.text
-    bf = BeautifulSoup(html, 'lxml')
-    texts = bf.find('div', id='content')
-    content = texts.text.strip().split('\xa0' * 4)
-    return content
-
-
 def get_soup(url):
     response = requests.get(url=url, headers=headers)
     if response.status_code == 200:
@@ -35,21 +25,6 @@ def get_soup(url):
         html = response.text
         return BeautifulSoup(html, 'lxml')
 
-
-def test1():
-    print('test1')
-    # chapter_bs = BeautifulSoup(html, 'lxml')
-    # chapters = chapter_bs.find('div', id='list')
-    # chapters = chapters.find_all('a')
-    # for chapter in tqdm(chapters):
-    #     chapter_name = chapter.string
-    #     url = server + chapter.get('href')
-    #     content = get_content(url)
-    #     with open(book_name, 'a', encoding='utf-8') as f:
-    #         f.write(chapter_name)
-    #         f.write('\n')
-    #         f.write('\n'.join(content))
-    #         f.write('\n')
 
 def test():
     soup = get_soup(url=main_url)
@@ -59,10 +34,13 @@ def test():
     for block in div_blocks:
         h2_text = block.h2.text
         print(h2_text)
+        li_list = block.find_all('li')
         a_tags = block.find_all('a')
-        for a_tag in a_tags:
-            print(a_tag.text)
-            print(a_tag.get('href'))
+        for li_tag in li_list:
+            print(li_tag.text)  # 老张的春天/姜晓雅张达明
+            a_tag = li_tag.a
+            print(a_tag.text)   # 老张的春天
+            print(a_tag.get('href'))    # /book/37504/
 
 
 if __name__ == '__main__':
