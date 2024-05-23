@@ -1,13 +1,23 @@
 import mysql.connector
 from mysql.connector import Error
+from utils.db_util import load_db_config
+
+# 从配置文件中获取数据库连接信息
+db_config = load_db_config()
+host = db_config['host']
+database = db_config['database']
+user = db_config['user']
+password = db_config['password']
+
+connection = None  # 先初始化connection为None
 
 try:
     # 创建数据库连接
     connection = mysql.connector.connect(
-        host='your_host',  # 数据库主机地址，例如 'localhost' 或 '127.0.0.1'
-        database='your_database',  # 数据库名称
-        user='your_user',  # 数据库用户名
-        password='your_password'  # 数据库密码
+        host=host,  # 数据库主机地址，例如 'localhost' 或 '127.0.0.1'
+        database=database,  # 数据库名称
+        user=user,  # 数据库用户名
+        password=password  # 数据库密码
     )
 
     if connection.is_connected():
