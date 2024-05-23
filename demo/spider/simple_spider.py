@@ -5,6 +5,8 @@ import time
 
 """
 https://c.biancheng.net/python_spider/case07.html
+
+pip install BeautifulSoup4
 """
 
 

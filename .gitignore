@@ -160,4 +160,4 @@ cython_debug/
 .idea/
 
 spider/demo/*.txt
-config/db_config.ini
+etc/db_config.ini
