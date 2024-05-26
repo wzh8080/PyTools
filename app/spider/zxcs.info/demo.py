@@ -6,16 +6,16 @@ import requests
 
 """
 
-def get_file_url(file_id, folder_id, file_chk, mb, app):
+def get_file_url(file_id, file_chk):
     api_server = 'https://webapi.ctfile.com'  # 替换为目标API服务器地址
     params = {
         'uid': '41439203',  # 替换为实际用户ID
         'fid': file_id,
-        'folder_id': folder_id,
+        'folder_id': '0',
         'file_chk': file_chk,
-        'mb': mb,
+        'mb': '0',
         'token': '0',   # 通过getTokenId()获取的token
-        'app': app,
+        'app': '0',
         'acheck': '1',  # 实际值需根据页面元素判断
         'verifycode': '',
         'rd': str(random.random())
@@ -32,7 +32,7 @@ def get_file_url(file_id, folder_id, file_chk, mb, app):
     cookies = {pair[0]: pair[1] for pair in cookie_pairs}
 
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.95 Safari/537.36 QIHU 360SE'}
-
+    print(url)
     response = requests.get(url, headers=headers, cookies=cookies)
     data = response.json()
 
@@ -44,7 +44,6 @@ def get_file_url(file_id, folder_id, file_chk, mb, app):
         print("download_url", download_url)
         print("file_name", file_name)
         file_name = 'aaass.zip'
-
         with requests.get(download_url, stream=True) as r:
             r.raise_for_status()  # 如果响应状态码不是200，将抛出异常
             with open(file_name, 'wb') as f:
@@ -55,6 +54,12 @@ def get_file_url(file_id, folder_id, file_chk, mb, app):
 
 
 if __name__ == '__main__':
-    # 调用示例
-    get_file_url(1244466878, 0, 'ffe60dd8d9a079fd9e92b3e9d2e648ca', '0', '0')
+    # 解析 sel_url
+    file_id = '1248034078'  # 通过解析 sel_url
+    key = '41439203-1248034078-a87799'
+    psw = '2657'
+    # 获取 file_che
+
+    file_chk = 'ffe60dd8d9a079fd9e92b3e9d2e648ca'
+    get_file_url(file_id, file_chk)
 

@@ -161,4 +161,3 @@ cython_debug/
 .venv38/
 
 spider/demo/*.txt
-etc/db_config.ini

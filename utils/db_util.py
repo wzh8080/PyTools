@@ -93,6 +93,45 @@ def batch_insert(conn, table_name, columns, values):
         print(f"Error: {e}")
         if conn:
             conn.rollback()
+
+
+def db_batch_insert(cursor, table_name, columns, values):
+    """
+    批量插入数据到数据库。
+    """
+    placeholders = ', '.join(['%s'] * len(columns))
+    query = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({placeholders})"
+    print("query", query)
+    cursor.executemany(query, values)
+    print(f"{len(values)} rows inserted into {table_name} successfully.")
+
+
+def db_insert(cursor, table_name, columns, values):
+    """
+    插入数据到数据库。
+    """
+    # with db.get_conn() as conn, conn.cursor() as cursor:
+    placeholders = ', '.join(['%s'] * len(columns))
+    query = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({placeholders})"
+    cursor.executemany(query, values)
+    print(f"{len(values)} rows inserted into {table_name} successfully.")
+
+
+def execute_sql(conn, sql, params=None):
+    try:
+        cursor = conn.cursor()
+        cursor.execute(sql, params)
+        conn.commit()
+        r = cursor.fetchall()
+        print(f"执行SQL语句成功: {sql}")
+        cursor.close()
+        return r
+    except Error as e:
+        print(f"Error: {e}")
+        if conn:
+            conn.rollback()
+
+
 # 示例使用
 # db_manager = DatabaseManager()
 # batch_insert('your_table_name', ['column1', 'column2'], [(value1, value2), (value3, value4)])

@@ -4,7 +4,7 @@ from utils.http_util import get_soup
 import logging
 import time
 import random
-from tqdm import tqdm
+
 from urllib.parse import urljoin
 from utils.db_util import *
 
@@ -22,7 +22,7 @@ from utils.db_util import *
 
 
 logging.basicConfig(
-    filename='log/bg60-map.log',
+    filename='log/bg60-map1.log',
     filemode='w',
     # stream=sys.stdout,
     level=logging.DEBUG,
